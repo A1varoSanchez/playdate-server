@@ -1,19 +1,24 @@
 const router = require("express").Router()
-const { verifyToken } = require("../middlewares/verifyToken")
+const { verifyToken } = require("../middlewares/verifyToken.guard")
 
-const User = require("../models/User.model")
+const {
+    myProfile,
+    addChild,
+    getAllUsers,
+    addFriend,
+    deleteFriend
+} = require("../controllers/user.controllers")
 
-router.post('/addchild', verifyToken, (req, res, next) => {
 
-    const { _id } = req.payload
-    const { gender, birthday } = req.body
+router.get('/perfil/:id', verifyToken, myProfile)
 
-    const children = { gender, birthday }
+router.post('/addchild', verifyToken, addChild)
 
-    User
-        .findByIdAndUpdate(_id, { $push: { children } })
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.get('/getAllUser', getAllUsers)
+
+router.post('/addFriend', verifyToken, addFriend)
+
+router.post('/deletFriend', verifyToken, deleteFriend)
+
 
 module.exports = router

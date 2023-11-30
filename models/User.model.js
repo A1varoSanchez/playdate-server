@@ -5,27 +5,27 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      required: [true, 'Email is required.'],
+      required: [true, 'El email es obligatorio.'],
       unique: true,
       lowercase: true,
       trim: true
     },
     password: {
       type: String,
-      required: [true, 'Password is required.']
+      required: [true, 'La contraseña es obligatoria.']
     },
     username: {
       type: String,
-      required: [true, 'Username is required.'],
-      minlength: [3, 'Username must be at least 3 characters.']
+      required: [true, 'El nombre de usuario es obligatorio.'],
+      minlength: [3, 'El usuario debe tener al menos 3 caracteres.']
     },
     children: [{
       gender: {
         type: String,
-        enum: ['boy', 'girl']
+        enum: ['niño', 'niña']
       },
       birthday: {
-        type: String,
+        type: Date,
       },
     }],
     aboutUs: {

@@ -28,10 +28,10 @@ const eventSchema = new Schema(
             enum: ['0-3', '3-6', '6-9', '2-5', '5-8', '8-11', '10-13', 'all'],
             required: [true, 'Selecciona rango de edad recomendado.']
         },
-        participants: {
+        participants: [{
             type: Schema.Types.ObjectId,
             ref: 'User'
-        },
+        }],
         organizer: {
             type: Schema.Types.ObjectId,
             ref: 'User'
