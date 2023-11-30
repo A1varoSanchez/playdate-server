@@ -23,6 +23,7 @@ const allEvents = (req, res, next) => {
 
     Event
         .find()
+        .populate("participants")
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -39,13 +40,26 @@ const oneEvent = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//JOIN EVENTS
 const joinEvent = (req, res, next) => {
 
-    const { eventId, loggedId: participants } = req.body
+    const { eventId } = req.body
+    const { _id } = req.payload
 
     Event
-        .findByIdAndUpdate(eventId, { $addToSet: { participants } })
+        .findByIdAndUpdate(eventId, { $addToSet: { participants: _id } })
         .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//DELETE JOIN EVENTS
+const deleteJoin = (req, res, next) => {
+    const { eventId } = req.body
+    const { _id } = req.payload
+
+    Event
+        .findByIdAndUpdate(eventId, { $pull: { participants: _id } })
+        .then(responses => res.json(responses))
         .catch(err => next(err))
 }
 
@@ -53,5 +67,6 @@ module.exports = {
     createEvent,
     allEvents,
     oneEvent,
-    joinEvent
+    joinEvent,
+    deleteJoin
 }

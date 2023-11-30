@@ -6,7 +6,8 @@ const {
     createEvent,
     allEvents,
     oneEvent,
-    joinEvent
+    joinEvent,
+    deleteJoin
 } = require('../controllers/event.controllers')
 
 
@@ -17,6 +18,8 @@ router.get('/getAllEvents', allEvents)
 router.get("/getOneEvent/:event_id", oneEvent)
 
 router.post("/joinEvent", verifyToken, joinEvent)
+
+router.post('/deleteJoin', verifyToken, deleteJoin)
 
 
 module.exports = router
