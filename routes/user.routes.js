@@ -10,7 +10,7 @@ const {
 } = require("../controllers/user.controllers")
 
 
-router.get('/perfil/:id', verifyToken, myProfile)
+router.get('/perfil', verifyToken, myProfile)
 
 router.post('/addchild', verifyToken, addChild)
 
