@@ -9,6 +9,7 @@ const myProfile = (req, res, next) => {
     User
         .findById(_id)
         .populate('friends')
+        .populate('friendAdd')
         .then(response => res.json(response))
         .catch(err => next(err))
 
@@ -35,17 +36,27 @@ const getAllUsers = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const petitionFriend = (req, res, next) => {
+    const { friendId } = req.body
+    const { _id } = req.payload
+
+    User
+        .findByIdAndUpdate(friendId, { $addToSet: { friendAdd: { _id } } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 //ADD FRIEND TO USER PROFILE
 const addFriend = (req, res, next) => {
 
-    // TODO: COGER ID DEL LOGGED USER A TYRAVES DEL VERIFYTOKEN Y DE REQ.PAYLOAD
     const { friends } = req.body
     const { _id } = req.payload
 
     Promise.all
         ([
             User.findByIdAndUpdate(_id, { $addToSet: { friends } }),
-            User.findByIdAndUpdate(friends, { $addToSet: { friends: _id } })
+            User.findByIdAndUpdate(friends, { $addToSet: { friends: _id } }),
+            User.findByIdAndUpdate(_id, { $pull: { friendAdd: _id } }),
         ])
         .then(responses => res.json(responses))
         .catch(err => next(err))
@@ -70,6 +81,7 @@ module.exports = {
     addChild,
     getAllUsers,
     addFriend,
-    deleteFriend
+    deleteFriend,
+    petitionFriend
 
 }

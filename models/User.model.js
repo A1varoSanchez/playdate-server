@@ -43,6 +43,10 @@ const userSchema = new Schema(
       enum: ['USER', 'ADMIN'],
       default: 'USER'
     },
+    friendAdd: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
   },
   {
     timestamps: true
