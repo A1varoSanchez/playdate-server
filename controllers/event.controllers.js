@@ -23,7 +23,10 @@ const allEvents = (req, res, next) => {
 
     Event
         .find()
-        .populate("participants")
+        .populate({
+            path: 'participants',
+            select: { 'username': 1, '_id': 1 },
+        })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
