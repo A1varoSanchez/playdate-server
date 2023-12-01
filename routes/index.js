@@ -8,4 +8,7 @@ module.exports = app => {
 
     const userRoutes = require("./user.routes")
     app.use("/api/user", userRoutes)
+
+    const uploadRoutes = require("./upload.routes")
+    app.use("/api/upload", uploadRoutes)
 }
