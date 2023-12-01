@@ -2,18 +2,23 @@ const { Schema, model } = require("mongoose")
 
 const chatSchema = new Schema(
     {
-        participants: [{
+        participantOne: {
             type: Schema.Types.ObjectId,
             ref: 'User'
-        }],
+        },
+        participantTwo: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+
         messages: [{
             content: {
                 type: String
             },
-            sender: {
+            owner: {
                 type: Schema.Types.ObjectId,
                 ref: 'User'
-            },
+            }
         }],
     },
     {

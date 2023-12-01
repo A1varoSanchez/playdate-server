@@ -8,4 +8,7 @@ module.exports = app => {
 
     const userRoutes = require("./user.routes")
     app.use("/api/user", userRoutes)
+
+    const userChat = require("./chat.routes")
+    app.use("/api/chat", userChat)
 }

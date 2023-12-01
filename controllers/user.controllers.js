@@ -1,4 +1,4 @@
-const { response } = require("express")
+
 const User = require("../models/User.model")
 
 //USER PROFILE
@@ -62,6 +62,8 @@ const addFriend = (req, res, next) => {
         .catch(err => next(err))
 }
 
+
+
 //DELETE FRIEND TO USER PROFILE
 const deleteFriend = (req, res, next) => {
     const { friendId, } = req.body
@@ -82,6 +84,6 @@ module.exports = {
     getAllUsers,
     addFriend,
     deleteFriend,
-    petitionFriend
+    petitionFriend,
 
 }
