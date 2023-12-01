@@ -7,7 +7,8 @@ const {
     allEvents,
     oneEvent,
     joinEvent,
-    deleteJoin
+    deleteJoin,
+    searchByType
 } = require('../controllers/event.controllers')
 
 
@@ -21,5 +22,6 @@ router.post("/joinEvent", verifyToken, joinEvent)
 
 router.post('/deleteJoin', verifyToken, deleteJoin)
 
+router.get('/searchType', searchByType)
 
 module.exports = router

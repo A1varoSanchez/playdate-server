@@ -66,10 +66,21 @@ const deleteJoin = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//SEARCH BAR
+const searchByType = (req, res, next) => {
+    const searchType = req.query.type
+
+    Event
+        .find({ type: new RegExp(`^${searchType}`, 'i') })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 module.exports = {
     createEvent,
     allEvents,
     oneEvent,
     joinEvent,
-    deleteJoin
+    deleteJoin,
+    searchByType
 }
