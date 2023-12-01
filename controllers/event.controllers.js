@@ -43,7 +43,7 @@ const oneEvent = (req, res, next) => {
         .catch(err => next(err))
 }
 
-//JOIN EVENTS
+//JOIN EVENT
 const joinEvent = (req, res, next) => {
 
     const { eventId } = req.body
@@ -55,7 +55,7 @@ const joinEvent = (req, res, next) => {
         .catch(err => next(err))
 }
 
-//DELETE JOIN EVENTS
+//UNJOIN EVENT
 const deleteJoin = (req, res, next) => {
     const { eventId } = req.body
     const { _id } = req.payload
@@ -66,10 +66,44 @@ const deleteJoin = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//SEARCH BAR
+const searchByType = (req, res, next) => {
+    const searchType = req.query.type
+
+    Event
+        .find({ type: new RegExp(`^${searchType}`, 'i') })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//DISPLAY CREATED EVENTS
+const getMyEvents = (req, res, next) => {
+    const { _id } = req.payload
+
+    Event
+        .find({ organizer: _id })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//DISPLAY JOINED EVENTS
+const getJoinedEvents = (req, res, next) => {
+    const { _id } = req.payload
+
+    Event
+        .find({ participants: { $in: _id } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+
+}
+
 module.exports = {
     createEvent,
     allEvents,
     oneEvent,
     joinEvent,
-    deleteJoin
+    deleteJoin,
+    searchByType,
+    getMyEvents,
+    getJoinedEvents
 }

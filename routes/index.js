@@ -11,4 +11,7 @@ module.exports = app => {
 
     const userChat = require("./chat.routes")
     app.use("/api/chat", userChat)
+
+    const uploadRoutes = require("./upload.routes")
+    app.use("/api/upload", uploadRoutes)
 }
