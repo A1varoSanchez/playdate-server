@@ -8,7 +8,7 @@ const saltRounds = 10
 
 //SIGNUP
 const signup = (req, res, next) => {
-    const { username, email, password, aboutUs } = req.body
+    const { username, email, password, aboutUs, photo } = req.body
 
     if (password.length < 2) {
         res.status(400).json({ message: 'La contraseña debe tener mínimo dos caracteres.' })
@@ -27,7 +27,7 @@ const signup = (req, res, next) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ username, email, password: hashedPassword, aboutUs })
+            return User.create({ username, email, password: hashedPassword, aboutUs, photo })
         })
 
         .then(() => res.sendStatus(201))
