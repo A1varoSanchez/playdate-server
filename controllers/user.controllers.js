@@ -56,7 +56,7 @@ const addFriend = (req, res, next) => {
         ([
             User.findByIdAndUpdate(_id, { $addToSet: { friends } }),
             User.findByIdAndUpdate(friends, { $addToSet: { friends: _id } }),
-            User.findByIdAndUpdate(_id, { $pull: { friendAdd: _id } }),
+            User.findByIdAndUpdate(_id, { $pull: { friendAdd: friends } }),
         ])
         .then(responses => res.json(responses))
         .catch(err => next(err))
