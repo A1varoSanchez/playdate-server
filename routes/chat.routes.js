@@ -10,7 +10,7 @@ const {
 
 router.post('/init', verifyToken, chatInit)
 
-router.post('/getChat', getChat)
+router.get('/getChat', getChat)
 
 
 module.exports = router

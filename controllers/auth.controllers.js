@@ -8,24 +8,7 @@ const signup = (req, res, next) => {
     const { username, email, password, aboutUs, photo } = req.body
 
     User
-<<<<<<< HEAD
-        .create({ username, email, password, aboutUs })
-=======
-        .findOne({ email })
-        .then((foundUser) => {
-
-            if (foundUser) {
-                res.status(400).json({ message: 'Usuario ya existente.' })
-                return
-            }
-
-            const salt = bcrypt.genSaltSync(saltRounds)
-            const hashedPassword = bcrypt.hashSync(password, salt)
-
-            return User.create({ username, email, password: hashedPassword, aboutUs, photo })
-        })
-
->>>>>>> bf9a9fbdf8fc3a8d8f404bb3a0e40cb2506614cc
+        .create({ username, email, password, aboutUs, photo })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))
 }
