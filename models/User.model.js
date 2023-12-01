@@ -47,10 +47,6 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     }],
-    chats: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Chat'
-    }],
   },
   {
     timestamps: true
@@ -60,3 +56,8 @@ const userSchema = new Schema(
 const User = model("User", userSchema)
 
 module.exports = User
+
+
+
+
+//
