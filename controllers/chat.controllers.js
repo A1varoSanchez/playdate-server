@@ -20,12 +20,25 @@ const getChat = (req, res, next) => {
         .find()
         .then(response => res.json(response))
         .catch(err => next(err))
+}
 
-
+const sendChat = (req, res, next) => {
+    const { _id } = req.payload
+    const { chatId, msn } = req.body
+    const messages = {
+        content: msn,
+        owner: _id
+    }
+    console.log('------------', messages)
+    Chat
+        .findByIdAndUpdate(chatId, { $push: { messages } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
 }
 
 module.exports = {
     chatInit,
     getChat,
+    sendChat
 }
 
