@@ -39,6 +39,7 @@ const oneEvent = (req, res, next) => {
     Event
         .findById(event_id)
         .populate('organizer')
+        .populate('participants')
         .then(response => res.json(response))
         .catch(err => next(err))
 }
