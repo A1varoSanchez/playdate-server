@@ -1,4 +1,5 @@
 
+const { response } = require("express")
 const Chat = require("../models/Chat.model_")
 
 
@@ -22,14 +23,24 @@ const getChat = (req, res, next) => {
         .catch(err => next(err))
 }
 
+// const getOneChat = (req, res, next) => {
+//     const { chatId } = req.body
+//     console.log(chatId)
+//     Chat
+//         .findById(chatId)
+//         .populate('owner')
+//         .then(response => res.json(response))
+//         .catch(err => next(err))
+// }
+
 const sendChat = (req, res, next) => {
-    const { _id } = req.payload
+    const { username } = req.payload
     const { chatId, msn } = req.body
     const messages = {
-        content: msn,
-        owner: _id
+        ...msn,
+        owner: username
     }
-    console.log('------------', messages)
+
     Chat
         .findByIdAndUpdate(chatId, { $push: { messages } })
         .then(response => res.json(response))
@@ -39,6 +50,7 @@ const sendChat = (req, res, next) => {
 module.exports = {
     chatInit,
     getChat,
-    sendChat
+    sendChat,
+    // getOneChat
 }
 

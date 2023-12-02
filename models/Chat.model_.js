@@ -16,8 +16,8 @@ const chatSchema = new Schema(
                 type: String
             },
             owner: {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
+                type: String
+
             }
         }],
     },
