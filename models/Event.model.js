@@ -25,7 +25,7 @@ const eventSchema = new Schema(
         },
         ageGroup: {
             type: String,
-            enum: ['0-3', '3-6', '6-9', '2-5', '5-8', '8-11', '10-13', 'all'],
+            enum: ['0-3', '3-6', '6-9', '2-5', '5-8', '8-11', '10-13', 'todas las edades'],
             required: [true, 'Selecciona rango de edad recomendado.']
         },
         participants: [{

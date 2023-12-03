@@ -44,6 +44,22 @@ const oneEvent = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//EDIT EVENT
+const editEvent = (req, res, next) => {
+
+    const { eventId } = req.params
+    const { name, type, description, latitude, longitude, ageGroup } = req.body
+    const location = {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+    }
+    console.log(req.body)
+    Event
+        .findByIdAndUpdate(eventId, { name, type, description, location, ageGroup })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 //JOIN EVENT
 const joinEvent = (req, res, next) => {
 
@@ -103,6 +119,7 @@ module.exports = {
     allEvents,
     oneEvent,
     joinEvent,
+    editEvent,
     deleteJoin,
     searchByType,
     getMyEvents,

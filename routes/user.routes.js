@@ -3,6 +3,7 @@ const { verifyToken } = require("../middlewares/verifyToken.guard")
 
 const {
     myProfile,
+    editProfile,
     addChild,
     getAllUsers,
     addFriend,
@@ -11,11 +12,13 @@ const {
 } = require("../controllers/user.controllers")
 
 
-router.get('/perfil', verifyToken, myProfile)
+router.get('/profile', verifyToken, myProfile)
 
-router.post('/addchild', verifyToken, addChild)
+router.post('/editProfile', verifyToken, editProfile)
 
-router.get('/getAllUser', getAllUsers)
+router.post('/addChild', verifyToken, addChild)
+
+router.get('/getAllUsers', getAllUsers)
 
 router.post('/petitionFriend', verifyToken, petitionFriend)
 
