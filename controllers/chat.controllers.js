@@ -28,6 +28,11 @@ const getOneChat = (req, res, next) => {
     console.log(chatId)
     Chat
         .findById(chatId)
+        .populate({
+            path: 'participantTwo participantOne',
+            select: { 'username': 1, '_id': 1 },
+        })
+
         .then(response => res.json(response))
         .catch(err => next(err))
 }
