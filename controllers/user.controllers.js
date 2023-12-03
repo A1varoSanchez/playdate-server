@@ -15,6 +15,21 @@ const myProfile = (req, res, next) => {
 
 }
 
+//EDIT PROFILE
+const editProfile = (req, res, next) => {
+
+    const { _id } = req.payload
+    const { username, password, aboutUs, photo, gender, birthday } = req.body
+    const children = [{ gender, birthday }]
+
+    Promise.all([
+        User.findByIdAndUpdate(_id, { username, password, aboutUs, photo }),
+        User.findByIdAndDelete(_id, { children })
+    ])
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 //ADD CHILD TO USER PROFILE
 const addChild = (req, res, next) => {
 
@@ -80,10 +95,10 @@ const deleteFriend = (req, res, next) => {
 
 module.exports = {
     myProfile,
+    editProfile,
     addChild,
     getAllUsers,
     addFriend,
     deleteFriend,
     petitionFriend,
-
 }
