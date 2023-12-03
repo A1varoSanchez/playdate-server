@@ -6,7 +6,7 @@ const {
     chatInit,
     getChat,
     sendChat,
-    //   getOneChat
+    getOneChat
 } = require('../controllers/chat.controllers')
 
 
@@ -16,7 +16,7 @@ router.get('/getChat', getChat)
 
 router.post('/send', verifyToken, sendChat)
 
-//router.get('/getOneChat/', getOneChat)
+router.get('/getOneChat/:chatId', getOneChat)
 
 
 module.exports = router

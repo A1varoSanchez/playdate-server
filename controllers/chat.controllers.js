@@ -23,15 +23,14 @@ const getChat = (req, res, next) => {
         .catch(err => next(err))
 }
 
-// const getOneChat = (req, res, next) => {
-//     const { chatId } = req.body
-//     console.log(chatId)
-//     Chat
-//         .findById(chatId)
-//         .populate('owner')
-//         .then(response => res.json(response))
-//         .catch(err => next(err))
-// }
+const getOneChat = (req, res, next) => {
+    const { chatId } = req.params
+    console.log(chatId)
+    Chat
+        .findById(chatId)
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
 
 const sendChat = (req, res, next) => {
     const { username } = req.payload
@@ -51,6 +50,6 @@ module.exports = {
     chatInit,
     getChat,
     sendChat,
-    // getOneChat
+    getOneChat
 }
 
