@@ -7,6 +7,7 @@ const {
     allEvents,
     oneEvent,
     joinEvent,
+    editEvent,
     deleteJoin,
     searchByType,
     getMyEvents,
@@ -19,6 +20,8 @@ router.post('/create', verifyToken, createEvent)
 router.get('/getAllEvents', allEvents)
 
 router.get('/getOneEvent/:event_id', oneEvent)
+
+router.post('/edit/:eventId', editEvent)
 
 router.post('/joinEvent', verifyToken, joinEvent)
 
