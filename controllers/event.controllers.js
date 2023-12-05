@@ -38,6 +38,13 @@ const oneEvent = (req, res, next) => {
         .findById(event_id)
         .populate('organizer')
         .populate('participants')
+        .populate({
+            path: 'messages',
+            populate: {
+                path: 'sender',
+                select: { 'username': 1, '_id': 1 }
+            }
+        })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -133,10 +140,10 @@ const postCommentsEvents = (req, res, next) => {
     const { _id } = req.payload
     const { eventId, msn } = req.body
     const messages = {
-        text: msn,
+        ...msn,
         sender: _id
     }
-
+    console.log('------------------------------>Controllers', messages)
     Event
         .findByIdAndUpdate(eventId, { $push: { messages } })
         .then(response => res.json(response))

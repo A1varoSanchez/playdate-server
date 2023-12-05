@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const { checkRole } = require('../middlewares/route-guard')
 const { verifyToken } = require('../middlewares/verifyToken.guard')
 
 const {
@@ -19,7 +20,7 @@ const {
 
 router.post('/create', verifyToken, createEvent)
 
-router.get('/getAllEvents', allEvents)
+router.get('/getAllEvents', verifyToken, allEvents)
 
 router.get('/getOneEvent/:event_id', verifyToken, oneEvent)
 
@@ -37,7 +38,7 @@ router.get('/getMyEvents', verifyToken, getMyEvents)
 
 router.get('/getJoinedEvents', verifyToken, getJoinedEvents)
 
-router.post('/sendComments/', postCommentsEvents)
+router.post('/sendComments', verifyToken, postCommentsEvents)
 
 
 module.exports = router
