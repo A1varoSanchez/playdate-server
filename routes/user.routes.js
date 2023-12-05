@@ -3,6 +3,7 @@ const { verifyToken } = require("../middlewares/verifyToken.guard")
 
 const {
     myProfile,
+    userProfile,
     editProfile,
     addChild,
     deleteChild,
@@ -15,11 +16,13 @@ const {
 
 router.get('/profile', verifyToken, myProfile)
 
+router.get('/profile/:userId', verifyToken, userProfile)
+
 router.post('/editProfile', verifyToken, editProfile)
 
 router.post('/addChild', verifyToken, addChild)
 
-router.post('deleteChild', verifyToken, deleteChild)
+router.put('/deleteChild', verifyToken, deleteChild)
 
 router.get('/getAllUsers', getAllUsers)
 

@@ -29,6 +29,28 @@ const allEvents = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//FIND EVENTS CREATED BY USER
+const userEvents = (req, res, next) => {
+
+    const { userId } = req.params
+
+    Event
+        .findById(userId)
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//FIND EVENTS JOINED BY USER
+const userJoinedEvents = (req, res, next) => {
+
+    const { userId } = req.params
+
+    Event
+        .find({ participants: { $in: userId } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 //EVENT DETAILS
 const oneEvent = (req, res, next) => {
 
@@ -147,6 +169,8 @@ const postCommentsEvents = (req, res, next) => {
 module.exports = {
     createEvent,
     allEvents,
+    userEvents,
+    userJoinedEvents,
     oneEvent,
     joinEvent,
     editEvent,
