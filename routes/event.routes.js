@@ -6,6 +6,8 @@ const { verifyToken } = require('../middlewares/verifyToken.guard')
 const {
     createEvent,
     allEvents,
+    userEvents,
+    userJoinedEvents,
     oneEvent,
     joinEvent,
     editEvent,
@@ -21,6 +23,10 @@ const {
 router.post('/create', verifyToken, createEvent)
 
 router.get('/getAllEvents', verifyToken, allEvents)
+
+router.get('/userEvents', verifyToken, userEvents)
+
+router.get('/userJoinedEvents', verifyToken, userJoinedEvents)
 
 router.get('/getOneEvent/:event_id', verifyToken, oneEvent)
 
