@@ -19,15 +19,23 @@ const myProfile = (req, res, next) => {
 const editProfile = (req, res, next) => {
 
     const { _id } = req.payload
-    const { username, password, aboutUs, photo, gender, birthday } = req.body
-    const children = [{ gender, birthday }]
+    const { username, password, aboutUs, photo } = req.body
 
-    Promise.all([
-        User.findByIdAndUpdate(_id, { username, password, aboutUs, photo }),
-        User.findByIdAndDelete(_id, { children })
-    ])
+    User
+        .findByIdAndUpdate(_id, { username, password, aboutUs, photo })
         .then(response => res.json(response))
         .catch(err => next(err))
+
+    // const { username, password, aboutUs, photo, gender, birthday } = req.body
+    // const child = [{ gender, birthday }]
+
+    // Promise.all([
+    //     User.findByIdAndUpdate(_id, { username, password, aboutUs, photo }),
+    //     User.findByIdAndUpdate(_id, { $pull: { children: child } })
+    // ])
+    //     .then(response => res.json(response))
+    //     .catch(err => next(err))
+
 }
 
 //ADD CHILD TO USER PROFILE
@@ -40,6 +48,19 @@ const addChild = (req, res, next) => {
         .findByIdAndUpdate(_id, { $push: { children } })
         .then(response => res.json(response))
         .catch(err => next(err))
+}
+
+//DELETE CHILD
+const deleteChild = (req, res, next) => {
+
+    const { _id } = req.payload
+    const child = [{ gender, birthday }] = req.body
+
+    User
+        .User.findByIdAndUpdate(_id, { $pull: { children: child } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+
 }
 
 //GET ALL USERS
@@ -97,6 +118,7 @@ module.exports = {
     myProfile,
     editProfile,
     addChild,
+    deleteChild,
     getAllUsers,
     addFriend,
     deleteFriend,

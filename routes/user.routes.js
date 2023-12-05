@@ -5,6 +5,7 @@ const {
     myProfile,
     editProfile,
     addChild,
+    deleteChild,
     getAllUsers,
     addFriend,
     deleteFriend,
@@ -17,6 +18,8 @@ router.get('/profile', verifyToken, myProfile)
 router.post('/editProfile', verifyToken, editProfile)
 
 router.post('/addChild', verifyToken, addChild)
+
+router.post('deleteChild', verifyToken, deleteChild)
 
 router.get('/getAllUsers', getAllUsers)
 
