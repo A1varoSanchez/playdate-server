@@ -1,7 +1,5 @@
 const Event = require('./../models/Event.model')
 
-// TODO: REVISAR POSIBILIDADES DE SELECT Y SORT
-
 //CREATE EVENT
 const createEvent = (req, res, next) => {
 
@@ -49,14 +47,26 @@ const editEvent = (req, res, next) => {
 
     const { eventId } = req.params
     const { name, type, description, latitude, longitude, ageGroup } = req.body
+
     const location = {
         type: 'Point',
         coordinates: [longitude, latitude]
     }
-    console.log(req.body)
+
     Event
         .findByIdAndUpdate(eventId, { name, type, description, location, ageGroup })
         .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//DELETE EVENT
+const deleteEvent = (req, res, next) => {
+
+    const { event_id } = req.params
+
+    Event
+        .findByIdAndDelete(event_id)
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -74,6 +84,7 @@ const joinEvent = (req, res, next) => {
 
 //UNJOIN EVENT
 const deleteJoin = (req, res, next) => {
+
     const { eventId } = req.body
     const { _id } = req.payload
 
@@ -85,6 +96,7 @@ const deleteJoin = (req, res, next) => {
 
 //SEARCH BAR
 const searchByType = (req, res, next) => {
+
     const searchType = req.query.type
 
     Event
@@ -95,6 +107,7 @@ const searchByType = (req, res, next) => {
 
 //DISPLAY CREATED EVENTS
 const getMyEvents = (req, res, next) => {
+
     const { _id } = req.payload
 
     Event
@@ -105,14 +118,31 @@ const getMyEvents = (req, res, next) => {
 
 //DISPLAY JOINED EVENTS
 const getJoinedEvents = (req, res, next) => {
+
     const { _id } = req.payload
 
     Event
         .find({ participants: { $in: _id } })
         .then(response => res.json(response))
         .catch(err => next(err))
-
 }
+
+//COMMENTS EVENTS
+const postCommentsEvents = (req, res, next) => {
+
+    const { _id } = req.payload
+    const { eventId, msn } = req.body
+    const messages = {
+        text: msn,
+        sender: _id
+    }
+
+    Event
+        .findByIdAndUpdate(eventId, { $push: { messages } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 
 module.exports = {
     createEvent,
@@ -120,8 +150,10 @@ module.exports = {
     oneEvent,
     joinEvent,
     editEvent,
+    deleteEvent,
     deleteJoin,
     searchByType,
     getMyEvents,
-    getJoinedEvents
+    getJoinedEvents,
+    postCommentsEvents
 }

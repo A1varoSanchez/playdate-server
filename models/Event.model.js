@@ -21,7 +21,7 @@ const eventSchema = new Schema(
             },
             coordinates: {
                 type: [Number]
-            }
+            },
         },
         ageGroup: {
             type: String,
