@@ -29,6 +29,28 @@ const allEvents = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//FIND EVENTS CREATED BY USER
+const userEvents = (req, res, next) => {
+
+    const { userId } = req.params
+
+    Event
+        .findById(userId)
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
+//FIND EVENTS JOINED BY USER
+const userJoinedEvents = (req, res, next) => {
+
+    const { userId } = req.params
+
+    Event
+        .find({ participants: { $in: userId } })
+        .then(response => res.json(response))
+        .catch(err => next(err))
+}
+
 //EVENT DETAILS
 const oneEvent = (req, res, next) => {
 
@@ -38,6 +60,13 @@ const oneEvent = (req, res, next) => {
         .findById(event_id)
         .populate('organizer')
         .populate('participants')
+        .populate({
+            path: 'messages',
+            populate: {
+                path: 'sender',
+                select: { 'username': 1, '_id': 1 }
+            }
+        })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -133,10 +162,10 @@ const postCommentsEvents = (req, res, next) => {
     const { _id } = req.payload
     const { eventId, msn } = req.body
     const messages = {
-        text: msn,
+        ...msn,
         sender: _id
     }
-
+    console.log('------------------------------>Controllers', messages)
     Event
         .findByIdAndUpdate(eventId, { $push: { messages } })
         .then(response => res.json(response))
@@ -147,6 +176,8 @@ const postCommentsEvents = (req, res, next) => {
 module.exports = {
     createEvent,
     allEvents,
+    userEvents,
+    userJoinedEvents,
     oneEvent,
     joinEvent,
     editEvent,
