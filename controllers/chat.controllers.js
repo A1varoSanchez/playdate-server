@@ -44,6 +44,7 @@ const sendChat = (req, res, next) => {
         ...msn,
         owner: username
     }
+    console.log(chatId, msn)
 
     Chat
         .findByIdAndUpdate(chatId, { $push: { messages } })
