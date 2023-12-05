@@ -55,11 +55,7 @@ const addChild = (req, res, next) => {
 const deleteChild = (req, res, next) => {
 
     const { _id } = req.payload
-<<<<<<< HEAD
-    const child = [{ gender, birthday, _id }] = req.body
-=======
     const { child } = req.body
->>>>>>> f1bcff41617e4d962282731aba943472291b13d1
 
     User
         .findByIdAndUpdate(_id, { $pull: { children: { _id: child } } })
