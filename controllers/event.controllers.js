@@ -35,7 +35,7 @@ const userEvents = (req, res, next) => {
     const { userId } = req.params
 
     Event
-        .findById(userId)
+        .find({ organizer: userId })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -165,7 +165,6 @@ const postCommentsEvents = (req, res, next) => {
         ...msn,
         sender: _id
     }
-    console.log('------------------------------>Controllers', messages)
     Event
         .findByIdAndUpdate(eventId, { $push: { messages } })
         .then(response => res.json(response))

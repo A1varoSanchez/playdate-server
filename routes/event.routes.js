@@ -24,9 +24,9 @@ router.post('/create', verifyToken, createEvent)
 
 router.get('/getAllEvents', verifyToken, allEvents)
 
-router.get('/userEvents', verifyToken, userEvents)
+router.get('/userEvents/:userId', verifyToken, userEvents)
 
-router.get('/userJoinedEvents', verifyToken, userJoinedEvents)
+router.get('/userJoinedEvents/:userId', verifyToken, userJoinedEvents)
 
 router.get('/getOneEvent/:event_id', verifyToken, oneEvent)
 
