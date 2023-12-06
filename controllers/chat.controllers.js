@@ -3,7 +3,7 @@ const { response } = require("express")
 const Chat = require("../models/Chat.model_")
 
 
-
+//CREATE CHAT
 const chatInit = (req, res, next) => {
     const participantOne = { _id } = req.payload
     const participantTwo = { friendId } = req.body
@@ -15,6 +15,7 @@ const chatInit = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//FIND ALL CHAT
 const getChat = (req, res, next) => {
 
     Chat
@@ -23,6 +24,7 @@ const getChat = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//FIND ONE CHAT
 const getOneChat = (req, res, next) => {
     const { chatId } = req.params
     console.log(chatId)
@@ -37,6 +39,7 @@ const getOneChat = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//SEND MESSAGES
 const sendChat = (req, res, next) => {
     const { username } = req.payload
     const { chatId, msn } = req.body
@@ -44,13 +47,13 @@ const sendChat = (req, res, next) => {
         ...msn,
         owner: username
     }
-    console.log(chatId, msn)
 
     Chat
         .findByIdAndUpdate(chatId, { $push: { messages } })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
+
 
 module.exports = {
     chatInit,

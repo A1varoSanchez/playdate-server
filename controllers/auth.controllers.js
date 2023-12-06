@@ -18,8 +18,8 @@ const login = (req, res, next) => {
     const { email, password } = req.body
 
     if (email === '' || password === '') {
-        res.status(400).json({ message: "Provide email and password." });
-        return;
+        res.status(400).json({ message: "Provide email and password." })
+        return
     }
 
     User
@@ -48,6 +48,7 @@ const verifyt = (req, res, next) => {
 
     res.json({ loggedUser })
 }
+
 
 module.exports =
 {

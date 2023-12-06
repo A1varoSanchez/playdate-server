@@ -61,7 +61,6 @@ const deleteChild = (req, res, next) => {
         .findByIdAndUpdate(_id, { $pull: { children: { _id: child } } })
         .then(response => res.json(response))
         .catch(err => next(err))
-
 }
 
 //GET ALL USERS
@@ -73,6 +72,7 @@ const getAllUsers = (req, res, next) => {
         .catch(err => next(err))
 }
 
+//REQUEST FRIEND
 const petitionFriend = (req, res, next) => {
     const { friendId } = req.body
     const { _id } = req.payload
@@ -99,8 +99,6 @@ const addFriend = (req, res, next) => {
         .catch(err => next(err))
 }
 
-
-
 //DELETE FRIEND TO USER PROFILE
 const deleteFriend = (req, res, next) => {
     const { friendId, } = req.body
@@ -114,6 +112,7 @@ const deleteFriend = (req, res, next) => {
         .then(responses => res.json(responses))
         .catch(err => next(err))
 }
+
 
 module.exports = {
     myProfile,
