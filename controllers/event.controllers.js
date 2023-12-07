@@ -21,6 +21,7 @@ const allEvents = (req, res, next) => {
 
     Event
         .find()
+        .select({ 'name': 1, 'ageGroup': 1, 'type': 1, '_id': 1, 'location': 1 })
         .populate({
             path: 'participants',
             select: { 'username': 1, '_id': 1 },
@@ -58,8 +59,7 @@ const oneEvent = (req, res, next) => {
 
     Event
         .findById(event_id)
-        .populate('organizer')
-        .populate('participants')
+        .populate('organizer participants')
         .populate({
             path: 'messages',
             populate: {
@@ -84,7 +84,7 @@ const editEvent = (req, res, next) => {
 
     Event
         .findByIdAndUpdate(eventId, { name, type, description, location, ageGroup })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -107,7 +107,7 @@ const joinEvent = (req, res, next) => {
 
     Event
         .findByIdAndUpdate(eventId, { $addToSet: { participants: _id } })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -119,17 +119,17 @@ const deleteJoin = (req, res, next) => {
 
     Event
         .findByIdAndUpdate(eventId, { $pull: { participants: _id } })
-        .then(responses => res.json(responses))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
 //SEARCH BAR
 const searchByType = (req, res, next) => {
 
-    const searchType = req.query.type
+    const { type } = req.query
 
     Event
-        .find({ type: new RegExp(`^${searchType}`, 'i') })
+        .find({ type: new RegExp(`^${type}`, 'i') })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -159,12 +159,10 @@ const getJoinedEvents = (req, res, next) => {
 //COMMENTS EVENTS
 const postCommentsEvents = (req, res, next) => {
 
-    const { _id } = req.payload
+    const { _id: sender } = req.payload
     const { eventId, msn } = req.body
-    const messages = {
-        ...msn,
-        sender: _id
-    }
+    const messages = { ...msn, sender }
+
     Event
         .findByIdAndUpdate(eventId, { $push: { messages } })
         .then(response => res.json(response))

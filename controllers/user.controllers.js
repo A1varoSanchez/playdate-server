@@ -8,8 +8,7 @@ const myProfile = (req, res, next) => {
 
     User
         .findById(_id)
-        .populate('friends')
-        .populate('friendAdd')
+        .populate('friends friendAdd')
         .then(response => res.json(response))
         .catch(err => next(err))
 
@@ -35,7 +34,7 @@ const editProfile = (req, res, next) => {
 
     User
         .findByIdAndUpdate(_id, { username, password, aboutUs, photo })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -47,7 +46,7 @@ const addChild = (req, res, next) => {
 
     User
         .findByIdAndUpdate(_id, { $push: { children } })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -59,7 +58,7 @@ const deleteChild = (req, res, next) => {
 
     User
         .findByIdAndUpdate(_id, { $pull: { children: { _id: child } } })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -79,7 +78,7 @@ const petitionFriend = (req, res, next) => {
 
     User
         .findByIdAndUpdate(friendId, { $addToSet: { friendAdd: { _id } } })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
 
@@ -99,7 +98,7 @@ const addFriend = (req, res, next) => {
         .catch(err => next(err))
 }
 
-//DELETE FRIEND TO USER PROFILE
+//DELETE FRIEND FROM USER PROFILE
 const deleteFriend = (req, res, next) => {
     const { friendId, } = req.body
     const { _id } = req.payload

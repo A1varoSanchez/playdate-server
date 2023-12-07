@@ -5,12 +5,12 @@ const Chat = require("../models/Chat.model_")
 
 //CREATE CHAT
 const chatInit = (req, res, next) => {
-    const participantOne = { _id } = req.payload
-    const participantTwo = { friendId } = req.body
-    const messages = []
+
+    const { _id: participantOne } = req.payload
+    const { friendId: participantTwo } = req.body
 
     Chat
-        .create({ participantOne: _id, participantTwo: friendId, messages })
+        .create({ participantOne, participantTwo })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
 }
@@ -27,26 +27,22 @@ const getChat = (req, res, next) => {
 //FIND ONE CHAT
 const getOneChat = (req, res, next) => {
     const { chatId } = req.params
-    console.log(chatId)
+
     Chat
         .findById(chatId)
         .populate({
             path: 'participantTwo participantOne',
             select: { 'username': 1, '_id': 1 },
         })
-
         .then(response => res.json(response))
         .catch(err => next(err))
 }
 
 //SEND MESSAGES
 const sendChat = (req, res, next) => {
-    const { username } = req.payload
+    const { username: owner } = req.payload
     const { chatId, msn } = req.body
-    const messages = {
-        ...msn,
-        owner: username
-    }
+    const messages = { ...msn, owner }
 
     Chat
         .findByIdAndUpdate(chatId, { $push: { messages } })

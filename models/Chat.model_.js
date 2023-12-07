@@ -10,14 +10,12 @@ const chatSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-
         messages: [{
             content: {
                 type: String
             },
             owner: {
                 type: String
-
             }
         }],
     },
