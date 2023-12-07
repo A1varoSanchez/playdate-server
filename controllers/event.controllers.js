@@ -129,7 +129,7 @@ const searchByType = (req, res, next) => {
     const searchType = req.query.type
 
     Event
-        .find({ type: new RegExp(`^${searchType}`, 'i') })
+        .find({ type: new RegExp(`^${searchType}`, 'i/00') })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
