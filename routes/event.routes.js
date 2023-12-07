@@ -22,7 +22,7 @@ const {
 
 router.post('/create', verifyToken, createEvent)
 
-router.get('/getAllEvents', verifyToken, allEvents)
+router.get('/getAllEvents', allEvents)
 
 router.get('/userEvents/:userId', verifyToken, userEvents)
 
